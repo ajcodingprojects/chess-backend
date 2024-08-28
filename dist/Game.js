@@ -37,8 +37,19 @@ class Game {
         catch (e) {
             return; //invalid move
         }
+        (this.moveCount % 2 === 0 ? this.p1 : this.p2)
+            .send(JSON.stringify({
+            type: messages_1.MOVE,
+            payload: move
+        }));
         if (this.board.isGameOver()) {
-            this.p1.emit(JSON.stringify({
+            this.p1.send(JSON.stringify({
+                type: messages_1.GAME_OVER,
+                payload: {
+                    winner: this.board.turn() === "w" ? "black" : "white"
+                }
+            }));
+            this.p2.send(JSON.stringify({
                 type: messages_1.GAME_OVER,
                 payload: {
                     winner: this.board.turn() === "w" ? "black" : "white"
@@ -46,11 +57,6 @@ class Game {
             }));
             return;
         }
-        (this.moveCount % 2 === 0 ? this.p1 : this.p2)
-            .send(JSON.stringify({
-            type: messages_1.MOVE,
-            payload: move
-        }));
     }
 }
 exports.Game = Game;
