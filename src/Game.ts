@@ -52,6 +52,7 @@ export class Game {
             }));
 
         if (this.board.isGameOver()) {
+            
             this.p1.send(JSON.stringify({
                 type: GAME_OVER,
                 payload: {

@@ -28,6 +28,7 @@ export class GameManager {
         
             if (message.type === INIT_GAME) {
                 if (this.pendingUser) {
+                    this.games = this.games.filter((game) => game.p1 !== socket || game.p2 !== socket || game.p1 !== this.pendingUser || game.p2 !== this.pendingUser);
                     const game = new Game(this.pendingUser, socket);
                     this.games.push(game);
                     this.pendingUser = null;
